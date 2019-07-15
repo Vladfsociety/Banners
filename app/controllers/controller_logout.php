@@ -14,4 +14,3 @@ class Controller_Logout extends Controller
 	}
 	
 }
-?>

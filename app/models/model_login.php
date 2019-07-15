@@ -4,16 +4,28 @@ class Model_Login extends Model
 {
 
 	public function db_select_user_data($login)
-	{	
-		$mysqli = Model_Login::db_connect();
+	{
+		$clear_login = static::$mysqli->real_escape_string($login);
 
-		$query = sprintf("SELECT * FROM users WHERE login = '%s'", $login);
-		$result = $mysqli->query($query);
-		$user_data = $result->fetch_assoc();
+		$query = "SELECT * FROM users WHERE login = ?";
 
-		$mysqli->close();
+		if ($stmt = static::$mysqli->prepare($query)) {
+
+		    $stmt->bind_param("s", $clear_login);
+		    $stmt->execute();
+   			$result = $stmt->get_result();
+    		$user_data = $result->fetch_assoc();
+		    $stmt->close();
+		}
+		else {
+
+			echo "ERROR";
+			exit();
+		}
+
+		static::$mysqli->close();
 
 		return $user_data;
 	}
 }
-?>	
+	

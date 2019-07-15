@@ -1,20 +1,17 @@
-<h1>Страница авторизации</h1>
+<h1>Authorization</h1>
 <p>
 <form action="" method="post">
 <table class="login">
 	<tr>
-		<th colspan="2">Авторизация</th>
-	</tr>
-	<tr>
-		<td>Логин</td>
+		<td>Login</td>
 		<td><input type="text" name="login" required></td>
 	</tr>
 	<tr>
-		<td>Пароль</td>
+		<td>Password</td>
 		<td><input type="password" name="password" required></td>
 	</tr>
 	<th colspan="2" style="text-align: right">
-	<input type="submit" value="Войти" name="btn"
+	<input type="submit" value="Submit" name="btn"
 	style="width: 150px; height: 30px;"></th>
 </table>
 </form>

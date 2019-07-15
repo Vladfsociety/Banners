@@ -23,19 +23,25 @@ class Controller_Createbanner extends Controller
 			$URL = $new_file;
 			$position = $this->model->db_select_max_position();			
 
-			if ($this->model->db_insert_new_banner($name, $URL, $status, $position) !== TRUE) {
+			if ($this->model->db_insert_new_banner($name, $URL, $status, $position) === TRUE) {
 
-				echo "Ввод неудачен";
+				echo "Input successful";
+			} 
+			else {
+
+				echo "Input failed";
 				exit();
 			}
 
-			if (copy($_FILES['userfile']['tmp_name'], $new_file)) {
+			clearstatcache();
 
-				echo "Файл загружен на сервер";
+			if (move_uploaded_file($_FILES['userfile']['tmp_name'], $new_file)) {
+
+				echo "File uploaded to server";
 			}
 			else {
 
-				echo "Файл НЕ загружен на сервер";
+				echo "File is NOT uploaded to server";
 				exit();
 			}
 
@@ -45,4 +51,3 @@ class Controller_Createbanner extends Controller
 		$this->view->generate('createbanner_view.php', 'template_view.php');
 	}
 }
-?>

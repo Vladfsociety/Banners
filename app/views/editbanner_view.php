@@ -17,7 +17,7 @@
 	"<input type=\"hidden\" name=\"id\" value=".$_GET['id']." />";
 	?>
 	<th colspan="2" style="text-align: right">
-	<input type="submit" value="Отправить" name="btn"
+	<input type="submit" value="Submit" name="btn"
 	style="width: 150px; height: 30px;"></th>
 </table>
 </form>

@@ -1,19 +1,19 @@
 <?php
+
 class Model
 {
-	function db_connect() {
+	public static $mysqli;
+
+	function __construct() {
 
 		require(dirname(__FILE__)."/../../config.php");
 
-		$mysqli = new mysqli($host, $username, $password, $database);
+		static::$mysqli = new mysqli($host, $username, $password, $database);
 
-		if ($mysqli->connect_errno) {
+		if (static::$mysqli->connect_errno) {
 
-			printf("Не удалось подключиться: %s\n", $mysqli->connect_error);
+			printf("Connection error: %s\n", static::$mysqli->connect_error);
 			exit();
 		}
-
-		return $mysqli;
 	}
 }
-?>

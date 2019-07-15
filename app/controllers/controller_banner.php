@@ -25,4 +25,3 @@ class Controller_Banner extends Controller
 		$this->view->generate('banner_view.php', 'template_view.php', $data);
 	}
 }
-?>

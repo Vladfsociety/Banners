@@ -11,20 +11,31 @@ class Controller_Deletebanner extends Controller
 
 	function action_index()
 	{			
-		if($_SERVER['REQUEST_METHOD'] == 'POST') {
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			
 			$id = htmlspecialchars($_POST['id']);			
 			$URL = $this->model->db_select_URL($id);
 
-			if ($this->model->db_delete_banner($id) !== TRUE) {
+			if ($this->model->db_delete_banner($id) === TRUE) {
 
-				echo "Удаление неудачно";
+				echo "Removal successfully";
+			}
+			else {
+
+				echo "Removal failed";
 				exit();
 			}
 
-			if (is_file($URL)) {	
+			clearstatcache();
+
+			if (file_exists($URL) && is_file($URL)) {	
 
 				unlink($URL);
+			}
+			else {
+
+				echo "File does not exist";
+				exit();
 			}
 			
 			//header('Location:/banner');
@@ -33,4 +44,3 @@ class Controller_Deletebanner extends Controller
 		$this->view->generate('deletebanner_view.php', 'template_view.php');
 	}
 }
-?>

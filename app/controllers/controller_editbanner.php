@@ -18,29 +18,44 @@ class Controller_Editbanner extends Controller
 
 			$name = htmlspecialchars($_POST['name']);
 			$status = htmlspecialchars($_POST['Status']);
-			$id = $_POST['id'];
+			$id = htmlspecialchars($_POST['id']);
 			$previous_URL = $this->model->db_select_URL($id);
 			$extension_on_1 = explode(".", $previous_URL);
 			$URL = "assets/images/".$name.".".$extension_on_1[1];
 
-			if ($this->model->db_update_banner($name, $URL, $status, $id) !== TRUE) {
+			if ($this->model->db_update_banner($name, $URL, $status, $id) === TRUE) {
 
-				echo "Обновление неудачно";
+				echo "Update successfully";
+			}
+			else {
+
+				echo "Update failed";
 				exit();
 			}
-			
-			if (rename($previous_URL, $URL)) {
 
-				echo "Файл переименован";
+			clearstatcache();
+
+			if (file_exists($previous_URL) && is_file($previous_URL)) {
+
+				if (rename($previous_URL, $URL)) {
+
+					echo "File renamed";
+				} 
+				else {
+
+					echo "Failed to rename file";
+					exit();
+				}
 			} 
 			else {
 
-				echo "Не удалось переименовать файл";
-			}
-
+				echo "File does not exist";
+				exit();
+			}		
+			
 			header('Location:/banner');
 		}
+		
 		$this->view->generate('editbanner_view.php', 'template_view.php');
 	}
 }
-?>

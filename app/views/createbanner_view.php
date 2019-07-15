@@ -17,7 +17,7 @@
 		<td><input name='userfile' type="file" accept=".jpg, .jpeg, .png" required></td>
 	</tr>
 	<th colspan="2" style="text-align: right">
-	<input type="submit" value="Отправить" name="btn"
+	<input type="submit" value="Submit" name="btn"
 	style="width: 150px; height: 30px;"></th>
 </table>
 </form>

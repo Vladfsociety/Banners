@@ -79,4 +79,4 @@ class Route
 		header('Location:'.$host.'404');
     }
 }
-?>
+

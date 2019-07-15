@@ -5,7 +5,18 @@
 	<body>
 		<div id="wrapper">
 			<div id="logo">
-				<?php					
+				<?php		
+
+					$path = '/var/www/dev-vladk/web/assets/images/';
+
+					if ($open = scandir($path)) {
+					    foreach ($open as $k => $v) {
+					        //if ($v != "." && $v != "..") {
+					            echo $v, "<br>";
+					        //}
+					    }
+					}
+
 					if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === TRUE)
 					{
 						echo $_SESSION['user_name'];

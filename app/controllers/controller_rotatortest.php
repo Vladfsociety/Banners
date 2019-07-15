@@ -10,4 +10,3 @@ class Controller_Rotatortest extends Controller
 		$this->view->generate('rotatortest_view.php', 'template_view.php');
 	}
 }
-?>

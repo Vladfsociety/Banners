@@ -4,41 +4,47 @@ class Model_Deletebanner extends Model
 {	
 
 	public function db_delete_banner($id)
-	{	
-		$mysqli = Model_Deletebanner::db_connect();
+	{
+		$clear_id = intval($id);	
+		$query = "DELETE FROM banners WHERE id = ?";
 
-		$query = sprintf("DELETE FROM banners WHERE id = '%u'",	$id);
-		if ($mysqli->query($query) !== TRUE) {
+		if ($stmt = static::$mysqli->prepare($query)) {
 
-			$mysqli->close();	
-			echo "Ошибка при удалении из базы";
+		    $stmt->bind_param("d", $clear_id);
+		    $stmt->execute();
+		    $stmt->close();
+		}
+		else {
+
+			echo "Removal failed";
 			return FALSE;
 		}
-		$mysqli->close();	
+
+		static::$mysqli->close();			
 		
 		return TRUE;
 	}
 
 
 	public function db_select_URL($id)
-	{	
-		$mysqli = Model_Deletebanner::db_connect();
-		
-		$query = sprintf("SELECT URL FROM banners WHERE id = '%u'",	$id);
-		$result = $mysqli->query($query);
-		if (($row = $result->fetch_assoc()) !== null) {
+	{
+		$clear_id = intval($id);
+		$query = "SELECT URL FROM banners WHERE id = ?";
 
-			$URL = $row['URL'];
+		if ($stmt = static::$mysqli->prepare($query)) {
+
+		    $stmt->bind_param("d", $clear_id);
+		    $stmt->execute();
+		    $stmt->bind_result($URL);
+   			$stmt->fetch();
+		    $stmt->close();
 		}
 		else {
 
-			$mysqli->close();	
-			echo "Ошибка при получении URL";
+			echo "Error getting URL";
 			exit();
 		}
-		$mysqli->close();	
 
 		return $URL;
 	}
 }
-?>	

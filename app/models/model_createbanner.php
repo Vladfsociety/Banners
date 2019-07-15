@@ -5,43 +5,46 @@ class Model_Createbanner extends Model
 
 	public function db_insert_new_banner($name,	$URL, $status, $position)
 	{	
-		$mysqli = Model_Createbanner::db_connect();
+		
+		$clear_name = static::$mysqli->real_escape_string($name);
+		$clear_URL = static::$mysqli->real_escape_string($URL);
+		$clear_status = static::$mysqli->real_escape_string($status);
+		$clear_position = intval($position);
 
-		$query = sprintf("INSERT INTO banners (name, URL, status, position) VALUES ('%s', '%s', '%s', '%u')",
-			$name,
-			$URL,
-			$status,
-			$position
-		);
-		if ($mysqli->query($query) !== TRUE) {
-				
-			$mysqli->close();
-			echo "Ошибка при вводе данных";
-			return FALSE;
-		} 
-		$mysqli->close();
+		$query = "INSERT INTO banners (name, URL, status, position) VALUES (?, ?, ?, ?)";
+
+		if ($stmt = static::$mysqli->prepare($query)) {
+
+		    $stmt->bind_param("sssd", $clear_name, $clear_URL, $clear_status, $clear_position);
+		    $stmt->execute();
+		    $stmt->close();
+		}
+		else {
+
+			echo "Input Error";
+			return FALSE
+		}
+
+		static::$mysqli->close();
 		
 		return TRUE;
 	}
 
 
 	public function db_select_max_position()
-	{	
-		$mysqli = Model_Createbanner::db_connect();
-
-		$result = $mysqli->query("SELECT (MAX(position)+1) as maximum FROM banners");
+	{
+		$result = static::$mysqli->query("SELECT (MAX(position)+1) as maximum FROM banners");
 		if (($row = $result->fetch_assoc()) !== null) {
 
 			$position = $row['maximum'];
 		}
 		else {
 
-			echo "Ошибка при получении максимальной позиции";
+			echo "Error getting maximum position";
 			exit();
 		}
-		$mysqli->close();
 
 		return $position;
 	}
 }
-?>	
+	
