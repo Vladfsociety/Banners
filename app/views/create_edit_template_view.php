@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <title>Log in</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
     <link href="/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
     <style type="text/css">
       body {
@@ -13,7 +11,6 @@
         padding-bottom: 40px;
         background-color: #f5f5f5;
       }
-
       .form-signin {
         max-width: 300px;
         padding: 19px 29px 29px;
@@ -32,7 +29,7 @@
         margin-bottom: 10px;
       }
       .form-signin input[type="text"],
-      .form-signin input[type="password"] {
+       input[name="Status"] { 
         font-size: 16px;
         height: auto;
         margin-bottom: 15px;

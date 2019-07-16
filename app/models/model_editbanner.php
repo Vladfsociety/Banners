@@ -11,19 +11,29 @@ class Model_Editbanner extends Model
 		$clear_URL = static::$mysqli->real_escape_string($URL);
 		$clear_status = static::$mysqli->real_escape_string($status);
 		$clear_id = intval($id);
-		$query = "UPDATE banners SET name = ?, URL = ?, status = ? WHERE id = ?";
+		
+		$query = "UPDATE ".BANNERS_TABLE." SET ".NAME_COLUMN." = ?, ".URL_COLUMN." = ?, ".STATUS_COLUMN." = ? WHERE ".ID_COLUMN." = ?";
 
 		if ($stmt = static::$mysqli->prepare($query)) {
 
 		    $stmt->bind_param("sssd", $clear_name, $clear_URL, $clear_status, $clear_id);
-		    $stmt->execute();
+		    if ($stmt->execute()) {
+
+		    	echo "Successful ";
+		    }
+		    else {
+
+				echo "Update failed ";
+				return FALSE;
+		    }
 		    $stmt->close();
 		}
 		else {
 
-			echo "Update error";
+			echo "Update prepare error ";
 			return FALSE;
-
+		}
+		
 		static::$mysqli->close();	
 		
 		return TRUE;
@@ -32,21 +42,28 @@ class Model_Editbanner extends Model
 
 	public function db_select_URL($id)
 	{
-		$clear_id = intval($id);
-		$query = "SELECT URL FROM banners WHERE id = ?";
+		$clear_id = intval($id); 
+
+		$query = "SELECT ".URL_COLUMN." FROM ".BANNERS_TABLE." WHERE ".ID_COLUMN." = ?";
 
 		if ($stmt = static::$mysqli->prepare($query)) {
 
 		    $stmt->bind_param("d", $clear_id);
-		    $stmt->execute();
+		    if ($stmt->execute()) {
+
+		    	echo "Successful ";
+		    }
+		    else {
+
+				exit("Select URL failed ");
+		    }
 		    $stmt->bind_result($URL);
    			$stmt->fetch();
 		    $stmt->close();
 		}
 		else {
 
-			echo "Error getting URL";
-			exit();
+			exit("Select URL prepare failed ");
 		}
 
 		return $URL;

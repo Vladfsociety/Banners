@@ -4,51 +4,74 @@
   <meta content="charset=utf-8">
   <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">-->
 
-  <link rel="stylesheet" href="assets/css/flexslider.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="assets/css/flexslider/flexslider.css" type="text/css" media="screen" />
   <!-- Modernizr 
   <script src="assets/js/modernizr.js"></script>-->
 
 </head>
 <body class="loading">
+	<?php
+	if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) 
+{
+	echo "<form action=\"/createbanner/index\">
+    <button type=\"submit\">Add banner</button>
+	</form>
+	<br><br>";
+}
+?>
   <div id="main" role="main">
       <section class="slider">
         <div class="flexslider">
           <ul class="slides">
             
             	<?php 
-            	foreach($data as $row) {
+            	foreach($data as $key => $row) {
             		echo "<li>";
-					echo $row['name']."<br>".$row['status']."<br>".$row['position']."<br>"; 
+					echo $row['name']."<br>".$row['status']."<br>".$row['position']."<br>".$row['URL']."<br>"; 
 
-					if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === TRUE) 
+					if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) 
 					{
-						echo "<form method=\"POST\" action=\"/\">
-						<input type=\"hidden\" name=\"name\" value=".$row['name']." />
-					    <button type=\"submit\">Вверх</button>
-						</form>";
+						if (($key - 1) >= 0) {
 
-						echo "<form method=\"POST\" action=\"/\">
-						<input type=\"hidden\" name=\"name\" value=".$row['name']." />
-					    <button type=\"submit\">Вниз</button>
-						</form>";
+							echo "<form method=\"POST\" action=\"/changeposition/index\">
+							<input type=\"hidden\" name=\"id\" value=".$row['id']." />
+							<input type=\"hidden\" name=\"change_id\" value=".$data[$key-1]['id']." />
+						    <button type=\"submit\">Move up</button>
+							</form>";
+
+							echo "<br>";
+						} 		
+
+						if (($key + 1) < count($data)) {
+
+							echo "<form method=\"POST\" action=\"/changeposition/index\">
+							<input type=\"hidden\" name=\"id\" value=".$row['id']." />
+							<input type=\"hidden\" name=\"change_id\" value=".$data[$key+1]['id']." />
+						    <button type=\"submit\">Move down</button>
+							</form>";
+
+							echo "<br>";
+						}
 					}
 
-					echo "<a href=\"/\"><img src = ".$row['URL']."></a> 
-					<p class=\"flex-caption\">{$row['name']}</p>";
-					
-					
-					if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === TRUE) 
+					echo "<img src = ".$row['URL']."> <br>";		
+
+					if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) 
 					{
 						echo "<form method=\"POST\" action=\"/deletebanner/index\">
 						<input type=\"hidden\" name=\"id\" value=".$row['id']." />
-					    <button type=\"submit\">Удалить баннер</button>
+					    <button type=\"submit\">Remove banner</button>
 						</form>";		
+					
+						echo "<br>";		
 
 						echo "<form method=\"GET\" action=\"/editbanner/index\">
 						<input type=\"hidden\" name=\"id\" value=".$row['id']." />
-					    <button type=\"submit\">Редактировать баннер</button>
+					    <button type=\"submit\">Edit banner</button>
 						</form>";
 					}
+
+					echo "<br><br>";
 					echo "</li>";				
 				}
 				?> 
@@ -62,7 +85,7 @@
   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.min.js">\x3C/script>')</script>
 
   <!-- FlexSlider -->
-  <script defer src="assets/js/jquery.flexslider.js"></script>
+  <script defer src="assets/js/flexslider/jquery.flexslider.js"></script>
 
   <script type="text/javascript">
     $(function(){
@@ -71,10 +94,8 @@
     $(window).load(function(){
       $('.flexslider').flexslider({
         animation: "slide",
-        slideshow: false,        
-        //smoothHeight: true,
+        slideshow: false,
         slideshowSpeed: 2000,
-        //animationSpeed: 2000,
         pauseOnAction: true,
         pauseOnHover: true,
         start: function(slider){
@@ -104,7 +125,7 @@
 <table>
 <?php
 
-if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === TRUE) 
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) 
 {
 	echo "<form action=\"/createbanner/index\">
     <button type=\"submit\">Add banner</button>
@@ -116,7 +137,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === TRUE)
 
 		echo $row['name']."<br>".$row['status']."<br>".$row['position']."<br>".$row['URL']."<br>"; 
 
-		if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === TRUE) 
+		if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) 
 		{
 			if (($key - 1) >= 0) {
 
@@ -143,7 +164,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === TRUE)
 
 		echo "<img src = ".$row['URL']."> <br>";		
 
-		if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === TRUE) 
+		if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) 
 		{
 			echo "<form method=\"POST\" action=\"/deletebanner/index\">
 			<input type=\"hidden\" name=\"id\" value=".$row['id']." />

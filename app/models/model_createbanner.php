@@ -11,18 +11,24 @@ class Model_Createbanner extends Model
 		$clear_status = static::$mysqli->real_escape_string($status);
 		$clear_position = intval($position);
 
-		$query = "INSERT INTO banners (name, URL, status, position) VALUES (?, ?, ?, ?)";
+		$query = "INSERT INTO ".BANNERS_TABLE." (".NAME_COLUMN.", ".URL_COLUMN.", ".STATUS_COLUMN.", ".POSITION_COLUMN.") VALUES (?, ?, ?, ?)";
 
 		if ($stmt = static::$mysqli->prepare($query)) {
 
 		    $stmt->bind_param("sssd", $clear_name, $clear_URL, $clear_status, $clear_position);
-		    $stmt->execute();
+		    if ($stmt->execute()) {
+
+		    	echo "Successful ";
+		    }
+		    else {
+
+				exit("Input Error ");
+		    }
 		    $stmt->close();
 		}
 		else {
 
-			echo "Input Error";
-			return FALSE
+			exit("Insert prepare error ");
 		}
 
 		static::$mysqli->close();
@@ -33,15 +39,15 @@ class Model_Createbanner extends Model
 
 	public function db_select_max_position()
 	{
-		$result = static::$mysqli->query("SELECT (MAX(position)+1) as maximum FROM banners");
+		$result = static::$mysqli->query("SELECT (MAX(".POSITION_COLUMN.")+1) as maximum FROM ".BANNERS_TABLE);
+
 		if (($row = $result->fetch_assoc()) !== null) {
 
 			$position = $row['maximum'];
 		}
 		else {
 
-			echo "Error getting maximum position";
-			exit();
+			exit("Error getting maximum position ");
 		}
 
 		return $position;

@@ -6,14 +6,11 @@ class Model
 
 	function __construct() {
 
-		require(dirname(__FILE__)."/../../config.php");
-
-		static::$mysqli = new mysqli($host, $username, $password, $database);
+		static::$mysqli = new mysqli(HOST, USERNAME, PASSWORD, DATABASE);
 
 		if (static::$mysqli->connect_errno) {
 
-			printf("Connection error: %s\n", static::$mysqli->connect_error);
-			exit();
+			exit("Connection to db error: ".static::$mysqli->connect_error);
 		}
 	}
 }

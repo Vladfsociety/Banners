@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 class Controller_Editbanner extends Controller
 {
 
@@ -10,7 +8,6 @@ class Controller_Editbanner extends Controller
 		$this->model = new Model_Editbanner();
 		$this->view = new View();
 	}
-
 
 	function action_index()
 	{			
@@ -23,14 +20,13 @@ class Controller_Editbanner extends Controller
 			$extension_on_1 = explode(".", $previous_URL);
 			$URL = "assets/images/".$name.".".$extension_on_1[1];
 
-			if ($this->model->db_update_banner($name, $URL, $status, $id) === TRUE) {
+			if ($this->model->db_update_banner($name, $URL, $status, $id)) {
 
-				echo "Update successfully";
+				echo "Update successfully ";
 			}
 			else {
 
-				echo "Update failed";
-				exit();
+				exit("Update failed ");
 			}
 
 			clearstatcache();
@@ -39,23 +35,21 @@ class Controller_Editbanner extends Controller
 
 				if (rename($previous_URL, $URL)) {
 
-					echo "File renamed";
+					echo "File renamed ";
 				} 
 				else {
 
-					echo "Failed to rename file";
-					exit();
+					exit("Failed to rename file ");
 				}
 			} 
 			else {
 
-				echo "File does not exist";
-				exit();
+				exit("File does not exist ");
 			}		
 			
 			header('Location:/banner');
 		}
 		
-		$this->view->generate('editbanner_view.php', 'template_view.php');
+		$this->view->generate('editbanner_view.php', 'create_edit_template_view.php');
 	}
 }

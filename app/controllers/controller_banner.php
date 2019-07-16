@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 class Controller_Banner extends Controller
 {
 	
@@ -13,7 +11,7 @@ class Controller_Banner extends Controller
 
 	function action_index()
 	{		
-		if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === TRUE) {
+		if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {
 
 			$data = $this->model->db_select_all();
 		}
@@ -22,6 +20,6 @@ class Controller_Banner extends Controller
 			$data = $this->model->db_select_all_enabled();				
 		}
 
-		$this->view->generate('banner_view.php', 'template_view.php', $data);
+		$this->view->generate('new_banner_view.php', 'template_view.php', $data);
 	}
 }

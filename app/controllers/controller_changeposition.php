@@ -18,19 +18,18 @@ class Controller_Changeposition extends Controller
 			$position = $this->model->db_select_position($id);
 			$change_position = $this->model->db_select_position($change_id);
 
-			if (($this->model->db_set_position($id, $change_position) === TRUE) && ($this->model->db_set_position($change_id, $position) === TRUE)) {
+			if ($this->model->db_set_position($id, $position, $change_id, $change_position)) {
 
-				echo "Swap successfully";
+				echo "Swap successfully ";
 			}
 			else {
 
-				echo "Swap failed";
-				exit();
+				exit("Swap failed ");
 			}
 			
-			//header('Location:/banner');
+			header('Location:/banner');
 		}
 		
-		$this->view->generate('changeposition_view.php', 'template_view.php');
+		$this->view->generate('new_banner_view.php', 'template_view.php');
 	}
 }

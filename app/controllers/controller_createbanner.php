@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 class Controller_Createbanner extends Controller
 {
 
@@ -19,35 +17,30 @@ class Controller_Createbanner extends Controller
 			$status = htmlspecialchars($_POST['Status']);
 			$file_name = basename($_FILES['userfile']['name']);
 			$file_extension_1 = explode(".", $file_name);
-			$new_file = 'assets/images/'.$name.".".$file_extension_1[1];				
-			$URL = $new_file;
+			$URL = 'assets/images/'.$name.".".$file_extension_1[1];
 			$position = $this->model->db_select_max_position();			
 
-			if ($this->model->db_insert_new_banner($name, $URL, $status, $position) === TRUE) {
+			if ($this->model->db_insert_new_banner($name, $URL, $status, $position)) {
 
-				echo "Input successful";
+				echo "Input successful ";
 			} 
 			else {
 
-				echo "Input failed";
-				exit();
+				exit("Input failed ");
 			}
 
-			clearstatcache();
+			if (move_uploaded_file($_FILES['userfile']['tmp_name'], $URL)) {
 
-			if (move_uploaded_file($_FILES['userfile']['tmp_name'], $new_file)) {
-
-				echo "File uploaded to server";
+				echo "File uploaded to server ";
 			}
 			else {
 
-				echo "File is NOT uploaded to server";
-				exit();
+				exit("File is NOT uploaded to server ");
 			}
 
 			header('Location:/banner');
 		}
 
-		$this->view->generate('createbanner_view.php', 'template_view.php');
+		$this->view->generate('createbanner_view.php', 'create_edit_template_view.php');
 	}
 }

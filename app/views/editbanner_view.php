@@ -1,23 +1,24 @@
-<form action="" method="post">
-<table class="login">
-	<tr>
-		<td>New name</td>
-		<td><input type="text" name="name" required minlength="4"></td>
-	</tr>
-	<tr>
-		<td>New status</td>
-		<td><input list="status" name="Status" required></td>
-		<datalist id="status">
+<style type="text/css">     
+    .form-signin input[name="Status"] {        
+      height: auto;
+      margin-bottom: 15px;
+      padding: 7px 9px;
+    }
+</style>
+
+<div class="container">
+    <form class="form-signin" method="post">
+      <h2 class="form-signin-heading">Please enter new values</h2>
+      <input type="text" class="input-block-level" name="name" required minlength="4">
+      <input list="status" class="input-block-level" name="Status" required>
+      <datalist id="status">
 		  <option value="Enabled">
 		  <option value="Disabled">
-		</datalist>
-	</tr>
-	<?php 
-	echo 
-	"<input type=\"hidden\" name=\"id\" value=".$_GET['id']." />";
-	?>
-	<th colspan="2" style="text-align: right">
-	<input type="submit" value="Submit" name="btn"
-	style="width: 150px; height: 30px;"></th>
-</table>
-</form>
+	  </datalist>
+	  <?php 
+		echo 
+		"<input type=\"hidden\" name=\"id\" value=".$_GET['id']." />";
+	  ?>
+      <button class="btn btn-large btn-primary" type="submit">Submit</button>
+    </form>
+</div>

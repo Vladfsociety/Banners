@@ -16,17 +16,14 @@ class Controller_Deletebanner extends Controller
 			$id = htmlspecialchars($_POST['id']);			
 			$URL = $this->model->db_select_URL($id);
 
-			if ($this->model->db_delete_banner($id) === TRUE) {
+			if ($this->model->db_delete_banner($id)) {
 
-				echo "Removal successfully";
+				echo "Removal successfully ";
 			}
 			else {
 
-				echo "Removal failed";
-				exit();
+				exit("Removal failed ");
 			}
-
-			clearstatcache();
 
 			if (file_exists($URL) && is_file($URL)) {	
 
@@ -34,13 +31,12 @@ class Controller_Deletebanner extends Controller
 			}
 			else {
 
-				echo "File does not exist";
-				exit();
+				exit("File does not exist ");
 			}
 			
-			//header('Location:/banner');
+			header('Location:/banner');
 		}
 		
-		$this->view->generate('deletebanner_view.php', 'template_view.php');
+		$this->view->generate('new_banner_view.php', 'template_view.php');
 	}
 }
