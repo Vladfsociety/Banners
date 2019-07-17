@@ -30,6 +30,6 @@ class Controller_Changeposition extends Controller
 			header('Location:/banner');
 		}
 		
-		$this->view->generate('new_banner_view.php', 'template_view.php');
+		$this->view->generate('banner_view.php', 'template_view.php');
 	}
 }

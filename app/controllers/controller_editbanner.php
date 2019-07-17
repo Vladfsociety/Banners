@@ -18,7 +18,7 @@ class Controller_Editbanner extends Controller
 			$id = htmlspecialchars($_POST['id']);
 			$previous_URL = $this->model->db_select_URL($id);
 			$extension_on_1 = explode(".", $previous_URL);
-			$URL = "assets/images/".$name.".".$extension_on_1[1];
+			$URL = IMAGES_DIRECTORY.$name.".".$extension_on_1[1];
 
 			if ($this->model->db_update_banner($name, $URL, $status, $id)) {
 

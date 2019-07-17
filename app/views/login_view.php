@@ -1,25 +1,13 @@
-<h1>Authorization</h1>
-<p>
-<form action="" method="post">
-<table class="login">
-	<tr>
-		<td>Login</td>
-		<td><input type="text" name="login" required></td>
-	</tr>
-	<tr>
-		<td>Password</td>
-		<td><input type="password" name="password" required></td>
-	</tr>
-	<th colspan="2" style="text-align: right">
-	<input type="submit" value="Submit" name="btn"
-	style="width: 150px; height: 30px;"></th>
-</table>
-</form>
-</p>
+<div class="container">
+    <form class="form-signin" method="post">
+      <h2 class="form-signin-heading">Please sign in</h2>
+      <input type="text" class="input-block-level" placeholder="login" name="login" required>
+      <input type="password" class="input-block-level" placeholder="password" name="password" required>
+      <?php extract($data); ?>
+  	  <?php if ($login_status === "access_denied") { ?>
+  	  <p style="color:red">Uncorrect login or/and password</p>
+  	  <?php } ?>
+      <button class="btn btn-large btn-primary" type="submit">Sign in</button>
+    </form>
+</div>
 
-<?php extract($data); ?>
-<?php if ($login_status === "access_granted") { ?>
-<p style="color:green">Авторизация прошла успешно.</p>
-<?php } elseif ($login_status === "access_denied") { ?>
-<p style="color:red">Логин и/или пароль введены неверно.</p>
-<?php } 

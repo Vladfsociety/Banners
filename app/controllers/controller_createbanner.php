@@ -17,7 +17,7 @@ class Controller_Createbanner extends Controller
 			$status = htmlspecialchars($_POST['Status']);
 			$file_name = basename($_FILES['userfile']['name']);
 			$file_extension_1 = explode(".", $file_name);
-			$URL = 'assets/images/'.$name.".".$file_extension_1[1];
+			$URL = IMAGES_DIRECTORY.$name.".".$file_extension_1[1];
 			$position = $this->model->db_select_max_position();			
 
 			if ($this->model->db_insert_new_banner($name, $URL, $status, $position)) {

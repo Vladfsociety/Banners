@@ -45,6 +45,6 @@ class Controller_Login extends Controller
 			}
 		}		
 		
-		$this->view->generate('new_login_view.php', 'auth_template_view.php', $data);
+		$this->view->generate('login_view.php', 'auth_template_view.php', $data);
 	}	
 }

@@ -20,6 +20,6 @@ class Controller_Banner extends Controller
 			$data = $this->model->db_select_all_enabled();				
 		}
 
-		$this->view->generate('new_banner_view.php', 'template_view.php', $data);
+		$this->view->generate('banner_view.php', 'template_view.php', $data);
 	}
 }

@@ -4,7 +4,7 @@ class Route
 {
 	static function start()
 	{
-		$controller_name = 'Main';
+		$controller_name = 'Banner';
 		$action_name = 'index';
 		
 		$routes = explode('/', $_SERVER['REQUEST_URI']);
@@ -24,18 +24,18 @@ class Route
 		$action_name = 'action_'.$action_name;
 
 		$model_file = strtolower($model_name).'.php';
-		$model_path = "app/models/".$model_file;
+		$model_path = MODELS_DIRECTORY.$model_file;
 
 		if (file_exists($model_path)) {
-			include "app/models/".$model_file;
+			include MODELS_DIRECTORY.$model_file;
 		}
 
 		$controller_file = strtolower($controller_name).'.php';
-		$controller_path = "app/controllers/".$controller_file;
+		$controller_path = CONTROLLERS_DIRECTORY.$controller_file;
 
 		if (file_exists($controller_path)) {
 
-			include "app/controllers/".$controller_file;
+			include CONTROLLERS_DIRECTORY.$controller_file;
 		}
 		else {
 

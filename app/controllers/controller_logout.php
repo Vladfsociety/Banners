@@ -12,7 +12,7 @@ class Controller_Logout extends Controller
 
 		header("Location: /");
 		
-		$this->view->generate('new_banner_view.php', 'auth_template_view.php');
+		$this->view->generate('banner_view.php', 'template_view.php');
 	}
 	
 }
