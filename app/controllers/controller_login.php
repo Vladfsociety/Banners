@@ -19,8 +19,8 @@ class Controller_Login extends Controller
 
 			if (isset($_POST['login']) && isset($_POST['password'])) {	
 
-				$login = htmlspecialchars($_POST['login']);
-				$cli_password = htmlspecialchars($_POST['password']);	
+				$login = $_POST['login'];
+				$cli_password = $_POST['password'];	
 				$db_user_data = $this->model->db_select_user_data($login);
 
 				if ($cli_password == $db_user_data['password']) {
@@ -28,7 +28,8 @@ class Controller_Login extends Controller
 					$_SESSION['loggedin'] = TRUE;
 					$_SESSION['user_name'] = $db_user_data['name'];
 					$data["login_status"] = "access_granted";	
-					header('Location:/');	
+					header("Location:".BASE_PAGE);
+					exit();
 				}
 				else {
 

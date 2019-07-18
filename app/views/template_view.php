@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <link href=<?php echo CSS_FLEXSLIDER_DIRECTORY."flexslider.css"; ?> rel="stylesheet">
-    <link href=<?php echo CSS_BOOTSTRAP_DIRECTORY."bootstrap.css"; ?> rel="stylesheet">
+    <link rel="stylesheet" href=<?php echo htmlspecialchars(CSS_FLEXSLIDER_DIRECTORY."flexslider.css"); ?>>
+    <link rel="stylesheet" href=<?php echo htmlspecialchars(CSS_BOOTSTRAP_DIRECTORY."bootstrap.css"); ?>>
     <style type="text/css">
       body {
         padding-top: 20px;
@@ -14,6 +14,11 @@
         margin: 0 auto;
         max-width: 1000px;
       } 
+      a.disabled {
+        pointer-events: none; /* делаем элемент неактивным для взаимодействия */
+        cursor: default; /*  курсор в виде стрелки */
+        color: #888;/* цвет текста серый */
+      }
     </style>    
   </head>
 
@@ -24,17 +29,23 @@
           <?php 
               if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'])
               {
-                echo "<li>".$_SESSION['user_name']."</li> <li><a href=\"/logout/index\">Log out </a> </li>"; 
+                ?>
+                <li><a class="disable"><?php echo htmlspecialchars($_SESSION['user_name']); ?></a></li> 
+                <li><a href="/logout/index">Log out </a> </li>
+                <?php
               } 
               else {
-                ?> <li><a href="/login/index">Log in</a> </li><?php
+                ?> 
+                <li><a href="/login/index">Log in</a> </li>
+                <?php
               }
             ?>
         </ul> 
       <div class="row-fluid">
         <div class="span12">
-            <?php include VIEWS_DIRECTORY.$content_view; ?>
+            <?php include_once VIEWS_DIRECTORY.$content_view; ?>
+        </div>
       </div>
-    </div>
+    </div>  
   </body>
 </html>

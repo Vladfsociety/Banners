@@ -13,8 +13,8 @@ class Controller_Changeposition extends Controller
 	{			
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			
-			$id = htmlspecialchars($_POST['id']);			
-			$change_id = htmlspecialchars($_POST['change_id']);
+			$id = $_POST['id'];			
+			$change_id = $_POST['change_id'];
 			$position = $this->model->db_select_position($id);
 			$change_position = $this->model->db_select_position($change_id);
 
@@ -27,7 +27,8 @@ class Controller_Changeposition extends Controller
 				exit("Swap failed ");
 			}
 			
-			header('Location:/banner');
+			header("Location:".BASE_PAGE);
+			exit();			
 		}
 		
 		$this->view->generate('banner_view.php', 'template_view.php');

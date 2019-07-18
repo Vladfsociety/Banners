@@ -10,7 +10,8 @@ class Controller_Logout extends Controller
 
 		session_destroy();	
 
-		header("Location: /");
+		header("Location:".BASE_PAGE);
+		exit();
 		
 		$this->view->generate('banner_view.php', 'template_view.php');
 	}

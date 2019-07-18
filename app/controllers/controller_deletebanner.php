@@ -13,7 +13,7 @@ class Controller_Deletebanner extends Controller
 	{			
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			
-			$id = htmlspecialchars($_POST['id']);			
+			$id = $_POST['id'];			
 			$URL = $this->model->db_select_URL($id);
 
 			if ($this->model->db_delete_banner($id)) {
@@ -34,7 +34,8 @@ class Controller_Deletebanner extends Controller
 				exit("File does not exist ");
 			}
 			
-			header('Location:/banner');
+			header("Location:".BASE_PAGE);			
+			exit();
 		}
 		
 		$this->view->generate('banner_view.php', 'template_view.php');

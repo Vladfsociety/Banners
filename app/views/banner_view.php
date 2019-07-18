@@ -5,8 +5,6 @@
   .navbar .nav > li {
   margin-right: 30px;
   } 
-
-
   .flex-direction-nav a  {
   line-height: 40px;
   }
@@ -15,10 +13,11 @@
 <div>
 	<?php
 	if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {
-
-		echo "<form action=\"/createbanner/index\">
-	    <button class=\"btn btn-large btn-success\" type=\"submit\">Add banner</button>
-		</form>";
+		?>
+		<form action="/createbanner/index">
+	    <button class="btn btn-large btn-success" type="submit">Add banner</button>
+		</form>
+		<?php
 	}
 	?>	  
 	      <section class="slider">
@@ -26,85 +25,78 @@
 	          <ul class="slides">	            	
 	            	<?php 
 	            	foreach($data as $key => $row) {
-	            		echo "<li>";?>	
+	            		?> 
+	            		<li>	
 					       	<div class="navbar">
 					          <ul class="nav">					              
 								<?php
-								if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) 
-								{
+								if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {
+
 									if (($key - 1) >= 0) {
 										?>
 										<li>
-										<?php
-										echo "<form method=\"POST\" action=\"/changeposition/index\">
-										<input type=\"hidden\" name=\"id\" value=".$row['id']." />
-										<input type=\"hidden\" name=\"change_id\" value=".$data[$key-1]['id']." />
-									    <button class=\"btn btn-large btn-secondary\" type=\"submit\">Move left</button>
+										<form method="POST" action="/changeposition/index">
+										<input type="hidden" name="id" value=<?php echo htmlspecialchars($row['id']); ?>>
+										<input type="hidden" name="change_id" value=<?php echo htmlspecialchars($data[$key-1]['id']); ?>>
+									    <button class="btn btn-large btn-secondary" type="submit">Move left</button>
 										</form>
-										";?>
 										</li>
 										<?php
 									} 		
 									if (($key + 1) < count($data)) {
 										?>
 										<li>
-										<?php
-										echo "<form method=\"POST\" action=\"/changeposition/index\">
-										<input type=\"hidden\" name=\"id\" value=".$row['id']." />
-										<input type=\"hidden\" name=\"change_id\" value=".$data[$key+1]['id']." />
-									    <button class=\"btn btn-large btn-secondary\" type=\"submit\">Move right</button>
+										<form method="POST" action="/changeposition/index">
+										<input type="hidden" name="id" value=<?php echo htmlspecialchars($row['id']); ?>>
+										<input type="hidden" name="change_id" value=<?php echo htmlspecialchars($data[$key+1]['id']); ?>>
+									    <button class="btn btn-large btn-secondary" type="submit">Move right</button>
 										</form>
-										";?>
 										</li>
 										<?php
 									}
 								}
 								?>
 							  </ul>
-					        </div><!-- /.navbar -->				      
-						
-						<?php
+					        </div><!-- /.navbar -->	
 
-						echo "<img src = ".$row['URL'].">";
+						<img src=<?php echo htmlspecialchars($row['URL']); ?>>
 
-						?>
 					       	<div class="navbar">
 					          <ul class="nav">					              
 								<?php
 								if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) 
 								{
 									?>
-									<li class="right">
-									<?php									
-									echo "<form method=\"POST\" action=\"/deletebanner/index\">
-									<input type=\"hidden\" name=\"id\" value=".$row['id']." />
-								    <button class=\"btn btn-large btn-danger\" type=\"submit\">Remove banner</button>
-									</form>";?>
+									<li>									
+									<form method="POST" action="/deletebanner/index">
+									<input type="hidden" name="id" value=<?php echo htmlspecialchars($row['id']); ?>>
+								    <button class="btn btn-large btn-danger" type="submit">Remove banner</button>
+									</form>
 									</li>
-									<?php		
 
-									?>
 									<li>
-									<?php
-									echo "<form method=\"GET\" action=\"/editbanner/index\">
-									<input type=\"hidden\" name=\"id\" value=".$row['id']." />
-								    <button class=\"btn btn-large btn-secondary\" type=\"submit\">Edit banner</button>
-									</form>";?>
+									<form method="GET" action="/editbanner/index">
+									<input type="hidden" name="id" value=<?php echo htmlspecialchars($row['id']); ?>>
+									<input type="hidden" name="URL" value=<?php echo $row['URL']; ?>>
+									<input type="hidden" name="name" value=<?php echo htmlspecialchars($row['name']); ?>>
+									<input type="hidden" name="status" value=<?php echo htmlspecialchars($row['status']); ?>>
+								    <button class="btn btn-large btn-secondary" type="submit">Edit banner</button>
+									</form>
 									</li>
 									<?php
 								}
 								?>
 						 	  </ul>
-					        </div><!-- /.navbar -->					      
+					        </div><!-- /.navbar -->
+						</li>
 						<?php
-						echo "</li>";	
 					}
 					?> 
 	          </ul>	
 	        </div>
 	      </section>
 	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-	  <script defer src=<?php echo JS_FLEXSLIDER_DIRECTORY."jquery.flexslider.js"; ?>></script>
+	  <script defer src=<?php echo htmlspecialchars(JS_FLEXSLIDER_DIRECTORY."jquery.flexslider.js"); ?>></script>
 
 	  <script type="text/javascript">
 	    $(function(){

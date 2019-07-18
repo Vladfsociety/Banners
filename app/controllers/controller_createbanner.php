@@ -13,8 +13,8 @@ class Controller_Createbanner extends Controller
 	{			
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-			$name = htmlspecialchars($_POST['name']);
-			$status = htmlspecialchars($_POST['Status']);
+			$name = $_POST['name'];
+			$status = $_POST['Status'];
 			$file_name = basename($_FILES['userfile']['name']);
 			$file_extension_1 = explode(".", $file_name);
 			$URL = IMAGES_DIRECTORY.$name.".".$file_extension_1[1];
@@ -38,7 +38,8 @@ class Controller_Createbanner extends Controller
 				exit("File is NOT uploaded to server ");
 			}
 
-			header('Location:/banner');
+			header("Location:".BASE_PAGE);
+			exit();
 		}
 
 		$this->view->generate('createbanner_view.php', 'create_edit_template_view.php');

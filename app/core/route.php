@@ -27,7 +27,8 @@ class Route
 		$model_path = MODELS_DIRECTORY.$model_file;
 
 		if (file_exists($model_path)) {
-			include MODELS_DIRECTORY.$model_file;
+
+			include_once MODELS_DIRECTORY.$model_file;
 		}
 
 		$controller_file = strtolower($controller_name).'.php';
@@ -35,7 +36,7 @@ class Route
 
 		if (file_exists($controller_path)) {
 
-			include CONTROLLERS_DIRECTORY.$controller_file;
+			include_once CONTROLLERS_DIRECTORY.$controller_file;
 		}
 		else {
 

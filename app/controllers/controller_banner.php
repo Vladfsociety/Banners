@@ -17,7 +17,7 @@ class Controller_Banner extends Controller
 		}
 		else {
 
-			$data = $this->model->db_select_all_enabled();				
+			$data = $this->model->db_select_all_enabled();
 		}
 
 		$this->view->generate('banner_view.php', 'template_view.php', $data);

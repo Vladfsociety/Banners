@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Log in</title>
-    <link href=<?php echo CSS_BOOTSTRAP_DIRECTORY."bootstrap.css"; ?> rel="stylesheet">
+    <link rel="stylesheet" href=<?php echo htmlspecialchars(CSS_BOOTSTRAP_DIRECTORY."bootstrap.css"); ?>>
     <style type="text/css">
       body {
         padding-top: 40px;
@@ -25,7 +25,8 @@
       }
       .form-signin .form-signin-heading,
       .form-signin .checkbox {
-        margin-bottom: 10px;
+        margin-bottom: 15px;
+        text-align: center;
       }
       .form-signin input[type="text"],
       .form-signin input[type="password"] {
@@ -34,10 +35,22 @@
         margin-bottom: 15px;
         padding: 7px 9px;
       }
+       .form-signin input {
+        margin-bottom: 10px;
+        margin-top: 10px;
+      }
+      .form-signin button[name="submit"] { 
+        position: relative;
+        left: 200px;
+      }
+      .form-signin input[name="Cancel"] { 
+        position: relative;
+        left: -100px;
+      } 
     </style>   
   </head>
 
   <body>
-			<?php include VIEWS_DIRECTORY.$content_view; ?>
+			<?php include_once VIEWS_DIRECTORY.$content_view; ?>
   </body>
 </html>
