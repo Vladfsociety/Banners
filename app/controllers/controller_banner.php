@@ -2,15 +2,11 @@
 
 class Controller_Banner extends Controller
 {
-	
-	function __construct()
-	{
-		$this->model = new Model_Banner();
-		$this->view = new View();
-	}
 
 	function action_index()
 	{		
+		$this->set_model("Model_Banner");
+
 		if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {
 
 			$data = $this->model->db_select_all();

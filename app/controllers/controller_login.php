@@ -3,24 +3,36 @@
 class Controller_Login extends Controller
 {	
 
-	function __construct()
-	{
-		$this->model = new Model_Login();
-		$this->view = new View();
-	}
-
 	function action_index()
 	{
+		$this->set_model("Model_Login");
+
 		if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {
 
-			exit("Logged out first ");			
+			header("Location:".BASE_PAGE);
+			exit();			
 		}
 		else {
 
 			if (isset($_POST['login']) && isset($_POST['password'])) {	
 
-				$login = $_POST['login'];
-				$cli_password = $_POST['password'];	
+				if ($this->valid_login($_POST['login'])) {
+
+					$login = $_POST['login'];
+				}
+				else {
+
+					exit("Invalid login");
+				}
+				if ($this->valid_password($_POST['password'])) {
+
+					$cli_password = $_POST['password'];
+				}
+				else {
+
+					exit("Invalid password");
+				}
+				
 				$db_user_data = $this->model->db_select_user_data($login);
 
 				if ($cli_password == $db_user_data['password']) {

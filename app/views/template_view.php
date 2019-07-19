@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" href=<?php echo htmlspecialchars(CSS_FLEXSLIDER_DIRECTORY."flexslider.css"); ?>>
-    <link rel="stylesheet" href=<?php echo htmlspecialchars(CSS_BOOTSTRAP_DIRECTORY."bootstrap.css"); ?>>
+    <link rel="stylesheet" href="<?php echo htmlspecialchars(CSS_FLEXSLIDER_DIRECTORY."flexslider.css"); ?>">
+    <link rel="stylesheet" href="<?php echo htmlspecialchars(CSS_BOOTSTRAP_DIRECTORY."bootstrap.css"); ?>">
     <style type="text/css">
       body {
         padding-top: 20px;
@@ -16,9 +16,21 @@
       } 
       a.disabled {
         pointer-events: none; /* делаем элемент неактивным для взаимодействия */
-        cursor: default; /*  курсор в виде стрелки */
+        cursor: default; /*  курсор в виде стрелки *7
         color: #888;/* цвет текста серый */
       }
+      .form button[id="del"] {        
+        position: relative;
+        left: 0px;
+      }
+      .form button[id="edt"] {        
+        position: relative;
+        left: 665px;
+      }
+      .container-narrow li {
+        vertical-align: bottom;
+      }
+      
     </style>    
   </head>
 
@@ -30,7 +42,7 @@
               if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'])
               {
                 ?>
-                <li><a class="disable"><?php echo htmlspecialchars($_SESSION['user_name']); ?></a></li> 
+                <li><a class="disable"><?php echo htmlspecialchars($_SESSION['user_name']); ?></a></li>
                 <li><a href="/logout/index">Log out </a> </li>
                 <?php
               } 

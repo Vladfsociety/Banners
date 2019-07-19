@@ -1,19 +1,23 @@
 <?php
 
-class Controller_Deletebanner extends Controller
+class Controller_Deletebanner extends Login_Controller
 {
 
-	function __construct()
-	{
-		$this->model = new Model_Deletebanner();
-		$this->view = new View();
-	}
-
 	function action_index()
-	{			
+	{	
+		$this->set_model("Model_Deletebanner");
+
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			
-			$id = $_POST['id'];			
+			if ($this->valid_id($_POST['id'])) {
+
+				$id = $_POST['id'];
+			}
+			else {
+
+				exit("Invalid id");
+			}
+						
 			$URL = $this->model->db_select_URL($id);
 
 			if ($this->model->db_delete_banner($id)) {

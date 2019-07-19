@@ -1,22 +1,40 @@
 <?php
 
-class Controller_Editbanner extends Controller
+class Controller_Editbanner extends Login_Controller
 {
-
-	function __construct()
-	{
-		$this->model = new Model_Editbanner();
-		$this->view = new View();
-	}
 
 	function action_index()
 	{			
+		$this->set_model("Model_Editbanner");
+
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-			$name = $_POST['name'];
-			$status = $_POST['Status'];
-			$id = $_POST['id'];
-			$previous_URL = $this->model->db_select_URL($id);
+			if ($this->valid_name($_POST['name'])) {
+
+				$name = $_POST['name'];
+			}
+			else {
+
+				exit("Invalid name");
+			}
+			if ($this->valid_status($_POST['status'])) {
+
+				$status = $_POST['status'];
+			}
+			else {
+
+				exit("Invalid status");
+			}
+			if ($this->valid_id($_POST['id'])) {
+
+				$id = $_POST['id'];
+			}
+			else {
+
+				exit("Invalid id");
+			}	
+
+			$previous_data_banner = $this->model->db_select_banner($id);
 
 			if (basename($_FILES['userfile']['name']) != null) {
 
@@ -24,9 +42,9 @@ class Controller_Editbanner extends Controller
 				$file_extension_1 = explode(".", $file_name);
 				$URL = IMAGES_DIRECTORY.$name.".".$file_extension_1[1];
 
-				if (file_exists($previous_URL) && is_file($previous_URL)) {	
+				if (file_exists($previous_data_banner['URL']) && is_file($previous_data_banner['URL'])) {	
 
-					unlink($previous_URL);
+					unlink($previous_data_banner['URL']);
 				}
 				else {
 
@@ -44,12 +62,12 @@ class Controller_Editbanner extends Controller
 			}
 			else {
 
-				$extension_on_1 = explode(".", $previous_URL);
+				$extension_on_1 = explode(".", $previous_data_banner['URL']);
 				$URL = IMAGES_DIRECTORY.$name.".".$extension_on_1[1];
 
-				if (file_exists($previous_URL) && is_file($previous_URL)) {
+				if (file_exists($previous_data_banner['URL']) && is_file($previous_data_banner['URL'])) {
 
-					if (rename($previous_URL, $URL)) {
+					if (rename($previous_data_banner['URL'], $URL)) {
 
 						echo "File renamed ";
 					} 
@@ -74,9 +92,23 @@ class Controller_Editbanner extends Controller
 			}				
 			
 			header("Location:".BASE_PAGE);
-			exit();
+
+			$this->view->generate('editbanner_view.php', 'create_edit_template_view.php');
 		}
-		
-		$this->view->generate('editbanner_view.php', 'create_edit_template_view.php');
+		elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
+
+			if ($this->valid_id($_GET['id'])) {
+
+				$id = $_GET['id'];
+			}
+			else {
+
+				exit("Invalid id");
+			}
+
+			$data_banner = $this->model->db_select_banner($id);
+
+			$this->view->generate('editbanner_view.php', 'create_edit_template_view.php', $data_banner);
+		}
 	}
 }

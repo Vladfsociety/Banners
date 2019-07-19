@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>Log in</title>
-    <link rel="stylesheet" href=<?php echo htmlspecialchars(CSS_BOOTSTRAP_DIRECTORY."bootstrap.css"); ?>>
-    <style type="text/css">
+    <link rel="stylesheet" href="<?php echo htmlspecialchars(CSS_BOOTSTRAP_DIRECTORY."bootstrap.css"); ?>">
+    <style>
       body {
         padding-top: 40px;
         padding-bottom: 40px;
@@ -28,7 +28,7 @@
         margin-bottom: 15px;
         text-align: center;
       }
-      .form-signin input[type="text"],
+      .form-signin input[type="text"],  
       .form-signin input[type="password"] {
         font-size: 16px;
         height: auto;

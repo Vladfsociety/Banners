@@ -36,8 +36,8 @@
 										?>
 										<li>
 										<form method="POST" action="/changeposition/index">
-										<input type="hidden" name="id" value=<?php echo htmlspecialchars($row['id']); ?>>
-										<input type="hidden" name="change_id" value=<?php echo htmlspecialchars($data[$key-1]['id']); ?>>
+										<input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
+										<input type="hidden" name="change_id" value="<?php echo htmlspecialchars($data[$key-1]['id']); ?>">
 									    <button class="btn btn-large btn-secondary" type="submit">Move left</button>
 										</form>
 										</li>
@@ -47,8 +47,8 @@
 										?>
 										<li>
 										<form method="POST" action="/changeposition/index">
-										<input type="hidden" name="id" value=<?php echo htmlspecialchars($row['id']); ?>>
-										<input type="hidden" name="change_id" value=<?php echo htmlspecialchars($data[$key+1]['id']); ?>>
+										<input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
+										<input type="hidden" name="change_id" value="<?php echo htmlspecialchars($data[$key+1]['id']); ?>">
 									    <button class="btn btn-large btn-secondary" type="submit">Move right</button>
 										</form>
 										</li>
@@ -59,7 +59,7 @@
 							  </ul>
 					        </div><!-- /.navbar -->	
 
-						<img src=<?php echo htmlspecialchars($row['URL']); ?>>
+						<img src="<?php echo htmlspecialchars($row['URL']); ?>">
 
 					       	<div class="navbar">
 					          <ul class="nav">					              
@@ -68,19 +68,16 @@
 								{
 									?>
 									<li>									
-									<form method="POST" action="/deletebanner/index">
-									<input type="hidden" name="id" value=<?php echo htmlspecialchars($row['id']); ?>>
-								    <button class="btn btn-large btn-danger" type="submit">Remove banner</button>
+									<form class="form" method="POST" action="/deletebanner/index">
+									<input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
+								    <button class="btn btn-large btn-danger" id="del" type="submit">Remove banner</button>
 									</form>
 									</li>
 
 									<li>
-									<form method="GET" action="/editbanner/index">
-									<input type="hidden" name="id" value=<?php echo htmlspecialchars($row['id']); ?>>
-									<input type="hidden" name="URL" value=<?php echo $row['URL']; ?>>
-									<input type="hidden" name="name" value=<?php echo htmlspecialchars($row['name']); ?>>
-									<input type="hidden" name="status" value=<?php echo htmlspecialchars($row['status']); ?>>
-								    <button class="btn btn-large btn-secondary" type="submit">Edit banner</button>
+									<form class="form" method="GET" action="/editbanner/index">
+									<input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
+								    <button class="btn btn-large btn-secondary" id="edt" type="submit">Edit banner</button>
 									</form>
 									</li>
 									<?php
@@ -96,12 +93,9 @@
 	        </div>
 	      </section>
 	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-	  <script defer src=<?php echo htmlspecialchars(JS_FLEXSLIDER_DIRECTORY."jquery.flexslider.js"); ?>></script>
+	  <script defer src="<?php echo htmlspecialchars(JS_FLEXSLIDER_DIRECTORY."jquery.flexslider.js"); ?>"></script>
 
-	  <script type="text/javascript">
-	    $(function(){
-	      SyntaxHighlighter.all();
-	    });
+	  <script>
 	    $(window).load(function(){
 	      $('.flexslider').flexslider({
 	        animation: "slide",
@@ -109,9 +103,6 @@
 	        slideshowSpeed: 4000,
 	        pauseOnAction: true,
 	        pauseOnHover: true,
-	        start: function(slider){
-	          $('body').removeClass('loading');
-	        }
 	      });
 	    });
 	  </script>

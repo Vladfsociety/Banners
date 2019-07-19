@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <title></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href=<?php echo htmlspecialchars(CSS_BOOTSTRAP_DIRECTORY."bootstrap.css"); ?>>
-    <style type="text/css">
+    <link rel="stylesheet" href="<?php echo htmlspecialchars(CSS_BOOTSTRAP_DIRECTORY."bootstrap.css"); ?>">
+    <style>
       body {
         padding-top: 40px;
         padding-bottom: 40px;
@@ -32,7 +32,7 @@
         margin-bottom: 15px;
       }
       .form input[type="text"],
-       select[name="Status"] { 
+       select[name="status"] { 
         font-size: 16px;
         height: auto;
         margin-bottom: 0px;
@@ -47,7 +47,7 @@
        margin-left: 5px;
        font-size: 20px;
       }      
-      .form button[name="submit"] { 
+      .form button[type="submit"] { 
         position: relative;
         left: 200px;
       }
@@ -59,12 +59,6 @@
   </head>
 
   <body>
-  			<?php include_once VIEWS_DIRECTORY.$content_view; ?> 
-        <script>
-        $(".custom-file-input").on("change", function() {
-          var fileName = $(this).val().split("\\").pop();
-          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-        });
-        </script>         
+  			<?php include_once VIEWS_DIRECTORY.$content_view; ?>       
   </body>
 </html>

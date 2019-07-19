@@ -2,7 +2,8 @@
 
 class Model
 {
-	public static $mysqli;
+	
+	protected static $mysqli;
 
 	function __construct() {
 

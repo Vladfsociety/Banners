@@ -40,24 +40,24 @@ class Model_Editbanner extends Model
 	}
 
 
-	public function db_select_URL($id)
+	public function db_select_banner($id)
 	{
 		$clear_id = intval($id); 
 
-		$query = "SELECT ".URL_COLUMN." FROM ".BANNERS_TABLE." WHERE ".ID_COLUMN." = ?";
+		$query = "SELECT ".ID_COLUMN.", ".NAME_COLUMN.", ".URL_COLUMN.", ".STATUS_COLUMN." FROM ".BANNERS_TABLE." WHERE ".ID_COLUMN." = ?";
 
 		if ($stmt = static::$mysqli->prepare($query)) {
 
 		    $stmt->bind_param("d", $clear_id);
 		    if ($stmt->execute()) {
 
-		    	echo "Successful ";
+		    	//echo "Successful ";
 		    }
 		    else {
 
 				exit("Select URL failed ");
 		    }
-		    $stmt->bind_result($URL);
+		    $stmt->bind_result($id, $name, $URL, $status);
    			$stmt->fetch();
 		    $stmt->close();
 		}
@@ -66,7 +66,9 @@ class Model_Editbanner extends Model
 			exit("Select URL prepare failed ");
 		}
 
-		return $URL;
+		$data = ["id"=>$id, "name"=>$name, "URL"=>$URL, "status"=>$status];
+
+		return $data;
 	}
 }
 	

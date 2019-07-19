@@ -7,8 +7,7 @@
   	  <?php if ($login_status === "access_denied") { ?>
   	  <p style="color:red">Uncorrect login or/and password</p>
   	  <?php } ?>
-      <button class="btn btn-large btn-warning" name="submit" type="submit">Submit</button>
-      <input class="btn btn-large btn-primary" name="Cancel" type="button" onclick="window.location.replace('/')" value="Cancel">
+      <button class="btn btn-large btn-primary" name="submit" type="submit">Submit</button>
+      <input class="btn btn-large btn-warning" name="Cancel" type="button" onclick="window.location.replace('/')" value="Cancel">
     </form>
 </div>
-

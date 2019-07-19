@@ -1,20 +1,30 @@
 <?php
 
-class Controller_Createbanner extends Controller
+class Controller_Createbanner extends Login_Controller
 {
-
-	function __construct()
-	{
-		$this->model = new Model_Createbanner();
-		$this->view = new View();
-	}
 
 	function action_index()
 	{			
+		$this->set_model("Model_Createbanner");
+
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-			$name = $_POST['name'];
-			$status = $_POST['Status'];
+			if ($this->valid_name($_POST['name'])) {
+
+				$name = $_POST['name'];
+			}
+			else {
+
+				exit("Invalid name");
+			}
+			if ($this->valid_status($_POST['status'])) {
+
+				$status = $_POST['status'];
+			}
+			else {
+
+				exit("Invalid status");
+			}
 			$file_name = basename($_FILES['userfile']['name']);
 			$file_extension_1 = explode(".", $file_name);
 			$URL = IMAGES_DIRECTORY.$name.".".$file_extension_1[1];
