@@ -8,33 +8,35 @@ class Controller_Changeposition extends Login_Controller
 		$this->set_model("Model_Changeposition");
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			
-			if ($this->valid_id($_POST['id'])) {
 
-				$id = $_POST['id'];
+			if (!isset($_POST['id']) && !isset($_POST['change_id'])) {
+				header("Location:".BASE_PAGE);
+				exit();
 			}
-			else {
 
-				exit("Invalid id");
+			$data['id'] = $_POST['id'];
+			$data['change_id'] = $_POST['change_id'];
+
+			$error = $this->validate($data);
+
+			if (count($error) !== 0) {
+				header("Location:".BASE_PAGE);
+				exit();
 			}
-			if ($this->valid_id($_POST['change_id'])) {
 
-				$change_id = $_POST['change_id'];
+			if (($data['position'] = $this->model->db_select_position($data['id'])) === FALSE) {
+				header("Location:".BASE_PAGE);
+				exit();
 			}
-			else {
 
-				exit("Invalid id");
+			if (($data['change_position'] = $this->model->db_select_position($data['change_id'])) === FALSE) {
+				header("Location:".BASE_PAGE);
+				exit();
 			}
-			$position = $this->model->db_select_position($id);
-			$change_position = $this->model->db_select_position($change_id);
 
-			if ($this->model->db_set_position($id, $position, $change_id, $change_position)) {
-
-				echo "Swap successfully ";
-			}
-			else {
-
-				exit("Swap failed ");
+			if ($this->model->db_set_position($data) === FALSE) {
+				header("Location:".BASE_PAGE);
+				exit();
 			}
 			
 			header("Location:".BASE_PAGE);

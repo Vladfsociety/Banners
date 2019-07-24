@@ -7,29 +7,15 @@ class Model_Deletebanner extends Model
 	{
 		$clear_id = intval($id);	
 
-		$query = "DELETE FROM ".BANNERS_TABLE." WHERE ".ID_COLUMN." = ?";
-
-		if ($stmt = static::$mysqli->prepare($query)) {
-
-		    $stmt->bind_param("d", $clear_id);
-		    if ($stmt->execute()) {
-
-		    	echo "Successful ";
-		    }
-		    else {
-
-				echo "Removal failed ";
-				return FALSE;
-		    }
-		    $stmt->close();
-		}
-		else {
-
-			echo "Removal preapre failed ";
+		if (!$this->in_db($clear_id, BANNERS_TABLE, ID_COLUMN)) {
 			return FALSE;
 		}
 
-		static::$mysqli->close();			
+		$query = "DELETE FROM ".BANNERS_TABLE." WHERE ".ID_COLUMN." = ?";
+
+		if ($this->execute_query($query, array($clear_id)) === FALSE) {
+			return FALSE;
+		}	
 		
 		return TRUE;
 	}
@@ -39,26 +25,14 @@ class Model_Deletebanner extends Model
 	{
 		$clear_id = intval($id);
 
+		if (!$this->in_db($clear_id, BANNERS_TABLE, ID_COLUMN)) {
+			return FALSE;
+		}
+
 		$query = "SELECT ".URL_COLUMN." FROM ".BANNERS_TABLE." WHERE ".ID_COLUMN." = ?";
 
-		if ($stmt = static::$mysqli->prepare($query)) {
-
-		    $stmt->bind_param("d", $clear_id);
-		    if ($stmt->execute()) {
-
-		    	echo "Successful ";
-		    }
-		    else {
-
-				exit("Error getting URL ");
-		    }
-		    $stmt->bind_result($URL);
-   			$stmt->fetch();
-		    $stmt->close();
-		}
-		else {
-
-			exit("Error prepare getting URL ");
+		if (($URL = $this->execute_query($query, array($clear_id), $fetch=TRUE)) === FALSE) {
+			return FALSE;
 		}
 
 		return $URL;

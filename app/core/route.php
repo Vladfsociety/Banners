@@ -2,6 +2,7 @@
 
 class Route
 {
+	
 	static function start()
 	{
 		$controller_name = 'Banner';
@@ -10,12 +11,10 @@ class Route
 		$routes = explode('/', $_SERVER['REQUEST_URI']);
 
 		if (!empty($routes[1]))	{	
-
 			$controller_name = $routes[1];
 		}	
 
 		if (!empty($routes[2])) {
-
 			$action_name = $routes[2];
 		}
 
@@ -27,7 +26,6 @@ class Route
 		$model_path = MODELS_DIRECTORY.$model_file;
 
 		if (file_exists($model_path)) {
-
 			include_once MODELS_DIRECTORY.$model_file;
 		}
 
@@ -35,13 +33,10 @@ class Route
 		$controller_path = CONTROLLERS_DIRECTORY.$controller_file;
 
 		if (file_exists($controller_path)) {
-
 			include_once CONTROLLERS_DIRECTORY.$controller_file;
 		}
 		else {
-
-			exit();
-			//Route::ErrorPage404();
+			Route::ErrorPage404();
 		}
 
 		$controller = new $controller_name;
@@ -50,23 +45,18 @@ class Route
 		$action = $action_and_param[0];
 
 
-		if (method_exists($controller, $action)) {			
-
+		if (method_exists($controller, $action)) {
 			$controller->$action();
 		}
 		else {
-
-			exit();
-			//Route::ErrorPage404();
+			Route::ErrorPage404();
 		}	
 	}
 	
 	function ErrorPage404()
 	{
-        $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
         header('HTTP/1.1 404 Not Found');
-		header("Status: 404 Not Found");
-		header('Location:'.$host.'404');
+		header('Location:'.VIEWS_DIRECTORY.PAGE_404);
     }
 }
 

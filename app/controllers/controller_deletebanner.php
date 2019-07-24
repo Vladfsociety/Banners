@@ -5,43 +5,40 @@ class Controller_Deletebanner extends Login_Controller
 
 	function action_index()
 	{	
-		$this->set_model("Model_Deletebanner");
+		$this->set_model("Model_Deletebanner");		
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+			if (!isset($_POST['id'])) {
+				header("Location:".BASE_PAGE);
+				exit();
+			}
+
+			$data['id'] = $_POST['id'];
 			
-			if ($this->valid_id($_POST['id'])) {
+			$error = $this->validate($data);
 
-				$id = $_POST['id'];
-			}
-			else {
+			if (count($error) !== 0) {
+				header("Location:".BASE_PAGE);
+				exit();
+			}	
 
-				exit("Invalid id");
-			}
-						
-			$URL = $this->model->db_select_URL($id);
-
-			if ($this->model->db_delete_banner($id)) {
-
-				echo "Removal successfully ";
-			}
-			else {
-
-				exit("Removal failed ");
+			if (($data['URL'] = $this->model->db_select_URL($data['id'])) === FALSE) {
+				$error['other_error'] = TRUE;
+				return $this->view->generate('deletebanner_view.php', 'template_view.php', $error);
 			}
 
-			if (file_exists($URL) && is_file($URL)) {	
-
-				unlink($URL);
-			}
-			else {
-
-				exit("File does not exist ");
+			if ($this->delete_file($data['URL']) === FALSE) {
+				$error['other_error'] = TRUE;
+				return $this->view->generate('deletebanner_view.php', 'template_view.php', $error);
+			}				
+			
+			if (($this->model->db_delete_banner($data['id'])) === FALSE) {
+				$error['other_error'] = TRUE;
+				return $this->view->generate('deletebanner_view.php', 'template_view.php', $error);
 			}
 			
-			header("Location:".BASE_PAGE);			
-			exit();
+			return $this->view->generate('deletebanner_view.php', 'template_view.php', $error);
 		}
-		
-		$this->view->generate('banner_view.php', 'template_view.php');
 	}
 }

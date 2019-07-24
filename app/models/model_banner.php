@@ -11,12 +11,9 @@ class Model_Banner extends Model
 		$iter = 0;
 
 		while (($row = $result->fetch_assoc()) !== null) {
-
 			$data[$iter] = $row;
 			$iter++;
 		}
-
-		static::$mysqli->close();
 
 		return $data;
 	}
@@ -30,12 +27,9 @@ class Model_Banner extends Model
 		$iter = 0;
 
 		while (($row = $result->fetch_assoc()) !== null) {
-
 			$data[$iter] = $row;
 			$iter++;
 		}
-		
-		static::$mysqli->close();
 
 		return $data;
 	}

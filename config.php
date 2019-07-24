@@ -2,6 +2,7 @@
 
 define("BASE_PAGE", "/");
 define("LOGIN_PAGE", BASE_PAGE."login");
+define("PAGE_404", BASE_PAGE."404.php");
 
 define('USERNAME', 'dev');
 define('PASSWORD', 'devweb');

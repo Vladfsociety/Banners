@@ -9,49 +9,39 @@ class Controller_Createbanner extends Login_Controller
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-			if ($this->valid_name($_POST['name'])) {
-
-				$name = $_POST['name'];
-			}
-			else {
-
-				exit("Invalid name");
-			}
-			if ($this->valid_status($_POST['status'])) {
-
-				$status = $_POST['status'];
-			}
-			else {
-
-				exit("Invalid status");
-			}
-			$file_name = basename($_FILES['userfile']['name']);
-			$file_extension_1 = explode(".", $file_name);
-			$URL = IMAGES_DIRECTORY.$name.".".$file_extension_1[1];
-			$position = $this->model->db_select_max_position();			
-
-			if ($this->model->db_insert_new_banner($name, $URL, $status, $position)) {
-
-				echo "Input successful ";
-			} 
-			else {
-
-				exit("Input failed ");
+			if (!isset($_POST['name']) && !isset($_POST['status'])) {
+				header("Location:".BASE_PAGE);
+				exit();
 			}
 
-			if (move_uploaded_file($_FILES['userfile']['tmp_name'], $URL)) {
+			$data['name'] = $_POST['name'];
+			$data['status'] = $_POST['status'];	
 
-				echo "File uploaded to server ";
+			$error = $this->validate($data);
+
+			if (count($error) !== 0) {
+				return $this->view->generate('createbanner_view.php', 'create_edit_template_view.php', $error);
 			}
-			else {
 
-				exit("File is NOT uploaded to server ");
+			$data['position'] = $this->model->db_select_max_position();	
+
+			if (($data['URL'] = $this->load_file($data['name'])) === FALSE) {
+				$error['other_error'] = TRUE;
+				return $this->view->generate('createbanner_view.php', 'create_edit_template_view.php', $error);
+			}
+
+			if ($this->model->db_insert_new_banner($data) === FALSE) {
+				$this->delete_file($data['URL']);
+				$error['other_error'] = TRUE;
+				return $this->view->generate('createbanner_view.php', 'create_edit_template_view.php', $error);
 			}
 
 			header("Location:".BASE_PAGE);
 			exit();
 		}
 
-		$this->view->generate('createbanner_view.php', 'create_edit_template_view.php');
+		$error = [];
+
+		$this->view->generate('createbanner_view.php', 'create_edit_template_view.php', $error);
 	}
 }
